@@ -1,72 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #17352f;
+  background: #f2f6ef;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  --green: #164e41;
+  --lime: #d8f278;
+  --muted: #71817a;
+}
 
-/* Compact phone layout: keep the complete calculator in the first viewport. */
+* { box-sizing: border-box; }
+html { min-width: 320px; min-height: 100%; }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, #fff 0%, #f3f7ef 48%, #edf3ee 100%);
+}
+button, input { font: inherit; }
+.page-shell { width: min(1060px, calc(100% - 48px)); margin: 0 auto; }
+.topbar { height: 74px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e9e1; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #173c38; font-family: Manrope, sans-serif; font-size: 19px; font-weight: 800; letter-spacing: -.8px; }
+.brand-mark { display: grid; width: 36px; height: 36px; place-items: center; background: var(--lime); color: #173c38; border-radius: 12px; font-size: 21px; box-shadow: 0 5px 14px #b6d84d44; }
+.brand-light { color: #62706d; font-weight: 500; }
+.local-badge { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #e1e9e1; border-radius: 99px; background: #ffffffb8; color: #5e7269; font-size: 12px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #73b84a; box-shadow: 0 0 0 3px #73b84a20; }
+.intro { text-align: center; padding: 44px 0 29px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 7px; color: #547167; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+.eyebrow span { color: #91b936; font-size: 15px; }
+h1 { margin: 12px 0; color: #183a32; font-family: Manrope, sans-serif; font-size: clamp(38px, 5vw, 52px); line-height: 1.1; letter-spacing: -2.4px; font-weight: 800; }
+h1 span { color: #5a9073; }
+.intro > p { max-width: 490px; margin: 0 auto; color: #71817a; font-size: 14px; line-height: 1.65; }
+.calculator { display: grid; grid-template-columns: 1fr .9fr; background: #fff; border: 1px solid #e2eae2; border-radius: 22px; box-shadow: 0 22px 65px #244a3514; overflow: hidden; }
+.form-panel { padding: 32px 36px 26px; }
+.section-heading { display: flex; align-items: center; gap: 13px; margin-bottom: 24px; }
+.step-number { display: grid; width: 39px; height: 39px; place-items: center; border-radius: 13px; background: #edf5df; color: #577d43; font-size: 12px; font-weight: 700; }
+h2 { margin: 0; color: #1d3932; font-family: Manrope, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -.4px; }
+.section-heading p { margin: 4px 0 0; color: #84928b; font-size: 12px; }
+.field-label { display: block; margin: 0 0 7px; color: #40564e; font-size: 12px; font-weight: 700; }
+.input-wrap { display: flex; align-items: center; height: 48px; border: 1px solid #dfe8df; border-radius: 11px; background: #fbfdf9; transition: border-color .2s, box-shadow .2s, background .2s; }
+.input-wrap:focus-within { border-color: #75a88a; background: #fff; box-shadow: 0 0 0 4px #75a88a20; }
+.input-wrap input { width: 100%; min-width: 0; height: 100%; padding: 0 13px; border: 0; outline: 0; background: transparent; color: #213c34; font-size: 15px; font-weight: 600; }
+.input-wrap input::placeholder { color: #afbbb3; font-weight: 400; }
+.input-wrap input::-webkit-inner-spin-button, .input-wrap input::-webkit-outer-spin-button { margin: 0; -webkit-appearance: none; }
+.input-wrap input[type=number] { -moz-appearance: textfield; }
+.input-suffix { padding-right: 14px; color: #809187; font-size: 13px; font-weight: 600; }
+.price-input { height: 54px; background: #fbfdf7; }
+.price-input input { font-size: 18px; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.field-hint { margin: 7px 0 0; color: #91a097; font-size: 10px; line-height: 1.4; }
+.formula-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 21px; padding: 11px 12px; border: 1px solid #e9f0e2; border-radius: 10px; background: #f6f9f1; color: #718078; font-size: 11px; line-height: 1.5; }
+.info-icon { flex: 0 0 auto; display: grid; place-items: center; width: 15px; height: 15px; border: 1px solid #9aab93; border-radius: 50%; color: #71866a; font-family: Georgia, serif; font-size: 10px; font-style: italic; font-weight: 700; }
+.reset-button { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; margin-top: 8px; padding: 4px 0; border: 0; background: transparent; color: #718078; cursor: pointer; font-size: 11px; }
+.reset-button:hover { color: #285d4a; }
+.reset-button span { font-size: 16px; }
+.result-panel { padding: 32px 31px 23px; border-left: 1px solid #e9efe7; background: linear-gradient(145deg, #f3f8ed 0%, #eef5eb 100%); }
+.result-header { display: flex; align-items: center; justify-content: space-between; }
+.result-overline { margin-bottom: 5px; color: #718b74; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; }
+.result-header h2 { font-size: 19px; }
+.chart-icon { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #dce8d7; border-radius: 11px; background: #ffffffa6; color: #638d67; font-size: 17px; }
+.breakdown { margin-top: 22px; }
+.result-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; color: #66776e; font-size: 12px; }
+.result-row strong { color: #263d34; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.result-row strong.positive { color: #578738; }
+.result-row.subtotal { margin-top: 5px; padding-top: 14px; border-top: 1px solid #dce7d7; color: #344a3f; font-weight: 700; }
+.result-row.subtotal strong { font-size: 13px; }
+.total-card { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding: 16px 15px; border: 1px solid #2c5e4d; border-radius: 14px; background: linear-gradient(125deg, #174c40, #27634c); color: #fff; box-shadow: 0 8px 20px #174c4021; }
+.total-card div { display: flex; flex-direction: column; gap: 4px; }
+.total-card div > span { color: #d7edaf; font-size: 9px; font-weight: 700; letter-spacing: 1.1px; }
+.total-card small { color: #d3e2d7; font-size: 10px; }
+.total-card > strong { color: #e0f58e; font-family: Manrope, sans-serif; font-size: clamp(19px, 2.5vw, 24px); letter-spacing: -.7px; white-space: nowrap; }
+.privacy-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 13px 0 0; color: #718579; font-size: 10px; }
+.privacy-note span { color: #639247; font-size: 12px; font-weight: 700; }
+footer { padding: 22px 0 26px; color: #8d9b93; text-align: center; font-size: 10px; }
+footer span { padding: 0 5px; color: #91b18a; }
+
+/* Compact, colorful one-screen layout for phones, including typical 6-inch displays. */
 @media (max-width: 720px) {
-  body { min-width: 320px; }
-  .page-shell { width: min(100% - 24px, 500px); min-height: 100svh; display: flex; flex-direction: column; }
-  .topbar { flex: 0 0 48px; height: 48px; }
-  .brand { font-size: 15px; }
-  .brand-mark { width: 29px; height: 29px; border-radius: 9px; font-size: 18px; }
-  .local-badge { padding: 5px 8px; font-size: 0; }
-  .local-badge::after { content: 'Στη συσκευή'; font-size: 10px; }
-  .intro { flex: 0 0 auto; padding: 10px 0 12px; }
+  html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+  body { min-width: 320px; min-height: 0; background: linear-gradient(155deg, #f9fbf5, #eaf3ea); }
+  .page-shell { width: min(100% - 20px, 500px); height: 100vh; height: 100dvh; min-height: 0; margin: 0 auto; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { flex: 0 0 43px; height: 43px; }
+  .brand { gap: 7px; font-size: 14px; }
+  .brand-mark { width: 27px; height: 27px; border-radius: 9px; font-size: 17px; }
+  .local-badge { gap: 6px; padding: 4px 7px; font-size: 0; }
+  .local-badge::after { content: 'Στη συσκευή'; font-size: 9px; }
+  .intro { flex: 0 0 auto; padding: 8px 0 9px; }
   .eyebrow, .intro > p { display: none; }
-  h1 { margin: 0; font-size: clamp(25px, 7vw, 34px); line-height: 1.12; letter-spacing: -1.2px; }
+  h1 { margin: 0; font-size: clamp(23px, 6.5vw, 31px); line-height: 1.08; letter-spacing: -1px; }
   h1 br { display: none; }
   h1 span::before { content: ' '; }
-  .calculator { flex: 1 1 auto; min-height: 0; grid-template-columns: 1fr; grid-template-rows: auto 1fr; border-radius: 15px; }
-  .form-panel { padding: 12px 16px 8px; }
-  .section-heading { gap: 9px; margin-bottom: 10px; }
-  .step-number { width: 30px; height: 30px; border-radius: 9px; font-size: 10px; }
-  h2 { font-size: 14px; }
-  .section-heading p { margin-top: 2px; font-size: 10px; }
-  .field-label { margin-bottom: 4px; font-size: 10px; }
-  .input-wrap { height: 39px; }
-  .price-input { height: 42px; }
-  .price-input input { font-size: 16px; }
-  .input-wrap input { padding: 0 10px; font-size: 14px; }
-  .input-suffix { padding-right: 10px; font-size: 12px; }
-  .field-grid { gap: 10px; margin-top: 9px; }
-  .field-hint { display: none; }
-  .formula-note { display: none; }
-  .reset-button { min-height: 30px; margin-top: 4px; font-size: 10px; }
-  .result-panel { min-height: 0; padding: 11px 16px 10px; border-top: 1px solid #edf0e9; border-left: 0; }
-  .result-overline { margin-bottom: 2px; font-size: 8px; }
-  .result-header h2 { font-size: 15px; }
-  .chart-icon { width: 28px; height: 28px; }
-  .breakdown { margin-top: 6px; }
-  .result-row { min-height: 29px; padding: 5px 0; font-size: 10px; }
+  .calculator { flex: 1 1 auto; min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); border-radius: 15px; box-shadow: 0 10px 28px #244a3518; }
+  .form-panel { padding: 9px 13px 4px; }
+  .section-heading { gap: 8px; margin-bottom: 7px; }
+  .step-number { width: 27px; height: 27px; border-radius: 9px; font-size: 9px; }
+  h2 { font-size: 13px; }
+  .section-heading p { margin-top: 1px; font-size: 9px; }
+  .field-label { margin-bottom: 3px; font-size: 10px; }
+  .input-wrap { height: 34px; border-radius: 9px; }
+  .price-input { height: 37px; }
+  .price-input input { font-size: 15px; }
+  .input-wrap input { padding: 0 9px; font-size: 13px; }
+  .input-suffix { padding-right: 9px; font-size: 11px; }
+  .field-grid { gap: 8px; margin-top: 6px; }
+  .field-hint, .formula-note { display: none; }
+  .reset-button { min-height: 26px; margin-top: 1px; padding: 2px 0; font-size: 10px; }
+  .result-panel { min-height: 0; padding: 8px 13px 6px; border-top: 1px solid #dce8d7; border-left: 0; }
+  .result-overline { margin-bottom: 1px; font-size: 7px; }
+  .result-header h2 { font-size: 14px; }
+  .chart-icon { width: 25px; height: 25px; border-radius: 8px; font-size: 14px; }
+  .breakdown { margin-top: 4px; }
+  .result-row { min-height: 25px; padding: 3px 0; font-size: 10px; }
   .result-row strong { font-size: 10px; }
-  .result-row.subtotal { margin-top: 2px; padding-top: 7px; }
-  .result-row.subtotal strong { font-size: 11px; }
-  .total-card { min-height: 50px; margin-top: 7px; padding: 9px 12px; border-radius: 10px; }
+  .result-row.subtotal { margin-top: 1px; padding-top: 5px; }
+  .result-row.subtotal strong { font-size: 10px; }
+  .total-card { min-height: 43px; margin-top: 4px; padding: 6px 10px; border-radius: 10px; }
   .total-card div { gap: 2px; }
-  .total-card div > span { font-size: 8px; }
-  .total-card small { font-size: 9px; }
-  .total-card > strong { font-size: clamp(18px, 5vw, 22px); }
-  .privacy-note { margin-top: 6px; font-size: 9px; }
+  .total-card div > span { font-size: 7px; }
+  .total-card small { font-size: 8px; }
+  .total-card > strong { font-size: clamp(17px, 5vw, 21px); }
+  .privacy-note { margin-top: 4px; font-size: 8px; }
   footer { display: none; }
 }
 
 @media (max-width: 390px) {
-  .page-shell { width: calc(100% - 20px); }
-  .form-panel, .result-panel { padding-right: 13px; padding-left: 13px; }
-  .field-grid { gap: 8px; }
+  .page-shell { width: calc(100% - 16px); }
+  .form-panel, .result-panel { padding-right: 10px; padding-left: 10px; }
+  .field-grid { gap: 7px; }
+  .result-row { gap: 5px; font-size: 9px; }
+  .result-row strong { font-size: 9px; }
+  .total-card { gap: 6px; padding-right: 8px; padding-left: 8px; }
+  .total-card > strong { font-size: 17px; }
 }
 
-@media (max-width: 720px) and (max-height: 650px) {
-  .topbar { flex-basis: 40px; height: 40px; }
-  .intro { padding: 6px 0 8px; }
-  h1 { font-size: clamp(22px, 6vw, 28px); }
-  .form-panel { padding-top: 8px; padding-bottom: 4px; }
-  .section-heading { margin-bottom: 6px; }
-  .input-wrap { height: 34px; }
-  .price-input { height: 37px; }
-  .field-grid { margin-top: 6px; }
-  .reset-button { min-height: 25px; margin-top: 1px; }
-  .result-panel { padding-top: 7px; padding-bottom: 6px; }
-  .result-row { min-height: 25px; padding: 3px 0; }
-  .result-row.subtotal { padding-top: 5px; }
-  .total-card { min-height: 44px; margin-top: 4px; padding-top: 6px; padding-bottom: 6px; }
+@media (max-width: 720px) and (max-height: 620px) {
+  .topbar { flex-basis: 36px; height: 36px; }
+  .intro { padding: 5px 0 6px; }
+  h1 { font-size: 22px; }
+  .form-panel { padding-top: 5px; padding-bottom: 2px; }
+  .section-heading { margin-bottom: 4px; }
+  .input-wrap { height: 30px; }
+  .price-input { height: 33px; }
+  .field-grid { margin-top: 4px; }
+  .reset-button { min-height: 22px; }
+  .result-panel { padding-top: 5px; padding-bottom: 4px; }
+  .result-row { min-height: 22px; padding: 2px 0; }
+  .result-row.subtotal { padding-top: 4px; }
+  .total-card { min-height: 38px; margin-top: 3px; padding-top: 4px; padding-bottom: 4px; }
   .privacy-note { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
